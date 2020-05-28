@@ -46,7 +46,11 @@ class _MyAppState extends State<MyApp> {
           Container(
             margin: EdgeInsets.all(10.0),
             child: RaisedButton(
-              onPressed: () {}
+              onPressed: () {
+                setState(() {
+                _products.add('Advanced Food Tester');
+                });
+              }
                 // Once build is called, when launch is first loaded or data is changed
                 // We want to use the data to recreate dynamically with every button press
                 //  This isn't possible in a StatelessWidget which only accepts external data
