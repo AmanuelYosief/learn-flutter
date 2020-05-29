@@ -3,21 +3,36 @@ import 'package:flutter/material.dart';
 import './products.dart';
 
 class ProductManager extends StatefulWidget {
+
+  final String startingProduct;
+  //  Immutable class even though it is stateful, since the data changes in the state class, 
+  //  it is technically separated object, so this is final
+  ProductManager(this.startingProduct);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ProductManagerState();
   }
 }
 
 class _ProductManagerState extends State<ProductManager>{
+    List<String> _products = [];
 
-    List<String> _products = ['Food Tester'];
+    @override
+  void initState() {
+    _products.add(widget.startingProduct); // setups the default/starting value for products
+    super.initState(); // Base class is called after initState is run 
+  }
 
-    
+
+  @override
+  void didUpdateWidget(ProductManager oldWidget) {
+    // Whenever connected widget recieves updated data
+    //  This refers to the old widget data and compares to the new one
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column( children: [Container(
             margin: EdgeInsets.all(10.0),
             child: RaisedButton(
@@ -40,4 +55,4 @@ class _ProductManagerState extends State<ProductManager>{
           );
   }
   
-}
+} 

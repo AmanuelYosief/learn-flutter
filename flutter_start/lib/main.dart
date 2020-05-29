@@ -28,11 +28,11 @@ class MyApp extends StatelessWidget {
           //  Create an app bar
           title: Text('EasyList'),
         ),
-        body: ProductManager(),
+        body: ProductManager('Food Begginer'),
       ),
     );
     // Important rule; a widget always returns another widget in the build method,
-    //until you reach widgets that ships with flutter.
+    //  until you reach widgets that ships with flutter.
     // MaterialApp {} = Is a class imported from class material package
     // MaterialApp() = an object based on the class
     // new MaterialApp() = no longer needed in Flutter 2
