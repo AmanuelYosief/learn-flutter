@@ -18,6 +18,10 @@ final List<String> products;
 
 //  Accepts a list of products
 Products(this.products);
+// Named arguement doesn't work, for positional, optional arguement are wrapped with to be []
+// this needs to be constant, so const. so this is a list that can't be changed
+// Products([this.products = const[]])
+
 
 @override
   Widget build(BuildContext context) {

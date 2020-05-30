@@ -22,13 +22,18 @@ class MyApp extends StatelessWidget {
     //  Widget (Widget, BuildContext) is named, so that Typed lang Dart doesn't have to infer
     //  override is used to delibrately make it clear
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.deepOrange,
+        accentColor: Colors.deepPurple
+      ),
       home: Scaffold(
         //  Create a package
         appBar: AppBar(
           //  Create an app bar
-          title: Text('EasyList'),
+          title: Text('EasyList555'),
         ),
-        body: ProductManager('Food Begginer'),
+        body: ProductManager(),
       ),
     );
     // Important rule; a widget always returns another widget in the build method,
