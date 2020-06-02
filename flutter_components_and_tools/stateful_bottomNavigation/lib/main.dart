@@ -22,10 +22,10 @@ class _MyBottomNavigationState extends State<MyApp> {
           title: const Text('Bottom Navigation'),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.blue,
+          type: BottomNavigationBarType.shifting,
+          backgroundColor: Colors.red,
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
+          selectedItemColor: Colors.orange,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: Icon(Icons.home), title: Text('Home')),
