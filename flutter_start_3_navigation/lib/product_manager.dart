@@ -5,54 +5,53 @@ import './products.dart';
 import './product_control.dart';
 
 class ProductManager extends StatefulWidget {
-  final String startingProduct;
-  //  Immutable class even though it is stateful, since the data changes in the state class,
-  //  it is technically separated object, so this is final
+  final Map<String, String> startingProduct;
 
-  // Constructor set's the default value using optional arguement
-  ProductManager({this.startingProduct});
+  ProductManager({this.startingProduct}) {
+    print('[ProductManager Widget] Constructor');
+  }
 
   // Need this for StateFulWidget
   @override
   State<StatefulWidget> createState() {
+    print('[ProductManager Widget] createState()');
     return _ProductManagerState();
   }
 }
 
-//  Convection to use _CamelCase
 class _ProductManagerState extends State<ProductManager> {
-  //  Storing the list of products
-  List<String> _products = [];
+  List<Map<String, String>> _products = [];
 
-  // To set defaultValues or actions before the base class is called.
   @override
   void initState() {
     if (widget.startingProduct != null) {
-      _products.add(widget
-          .startingProduct); // setups the default/starting value for products
-
+      print('[ProductManager State] initState()');
+      _products.add(widget.startingProduct);
     }
-    super.initState(); // Base class is called after initState is run
+    super.initState();
   }
 
   //  Whenever connected widget recieves updated data, this will refer
   //  to the old widget data and compare it to the new one
   @override
   void didUpdateWidget(ProductManager oldWidget) {
+    print('[ProductManager State] didUpdateWidget()');
     super.didUpdateWidget(oldWidget);
   }
 
   //  ProductControl can't call setState to update data, hence it is passed up
   //  To this parent class, this function handles it
-  void _addProduct(String product) {
+  void _addProduct(Map<String, String> product) {
     setState(() {
       //  Adds it to the product list
       _products.add(product);
     });
+    print(_products);
   }
 
   @override
   Widget build(BuildContext context) {
+    print('[ProductManager State] build()');
     return Column(
       children: [
         Container(
