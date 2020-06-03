@@ -13,22 +13,34 @@ class Products extends StatelessWidget {
 //  optional arguement have to be wrapped with []
 //  Products([this.products = const[]]) --> data can't be changed at all
 
+  Widget _buildProductItem(BuildContext context, int index) {
+    // This function returns the widget and takes two information
+    // Build context e.g. theme information and so on
+    // The index of the item
+    return Card(
+      child: Column(children: <Widget>[
+        // Child is the context of the card
+        // Child is one widget, single widget, column is multiple widget positioned top to bottom
+        // Generic type <Widget> this will only hold multiple widgets
+        // Widget [] is an array, allows us to add a list of data/widgets.
+        //  instead   of a single data piece, this is stored in the children item, separated by a comma
+        Image.asset('assets/food.jpg'),
+        Text(products[index])
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: products
-          .map((element) => Card(
-                child: Column(children: <Widget>[
-                  // Child is the context of the card
-                  // Child is one widget, single widget, column is multiple widget positioned top to bottom
-                  // Generic type <Widget> this will only hold multiple widgets
-                  // Widget [] is an array, allows us to add a list of data/widgets.
-                  //  instead   of a single data piece, this is stored in the children item, separated by a comma
-                  Image.asset('assets/food.jpg'),
-                  Text(element)
-                ]),
-              ))
-          .toList(), // Can't scroll, Columns is not the right widget
-    );
+    return products.length > 0
+        ? ListView.builder(
+            itemBuilder: _buildProductItem,
+            itemCount: products.length,
+            // This removes items when we don't see them
+            //  and add them when we need to see them
+          )
+        : Center(
+            child: Text("No Product found, please add some"),
+          );
   }
 }

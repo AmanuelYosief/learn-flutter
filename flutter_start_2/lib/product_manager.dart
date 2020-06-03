@@ -10,7 +10,7 @@ class ProductManager extends StatefulWidget {
   //  it is technically separated object, so this is final
 
   // Constructor set's the default value using optional arguement
-  ProductManager({this.startingProduct = 'Sweets tester'});
+  ProductManager({this.startingProduct});
 
   // Need this for StateFulWidget
   @override
@@ -27,8 +27,11 @@ class _ProductManagerState extends State<ProductManager> {
   // To set defaultValues or actions before the base class is called.
   @override
   void initState() {
-    _products.add(widget
-        .startingProduct); // setups the default/starting value for products
+    if (widget.startingProduct != null) {
+      _products.add(widget
+          .startingProduct); // setups the default/starting value for products
+
+    }
     super.initState(); // Base class is called after initState is run
   }
 
@@ -59,7 +62,9 @@ class _ProductManagerState extends State<ProductManager> {
           // without executing it's return function '(_addProduct())'
           child: ProductControl(_addProduct),
         ),
-        Expanded (child: Products(_products)) //  Now we execute Products, which returns a column
+        Expanded(
+            child: Products(
+                _products)) //  Now we execute Products, which returns a column
       ],
     );
   }

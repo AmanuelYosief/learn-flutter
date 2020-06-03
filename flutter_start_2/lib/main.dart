@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         //  Create a package
         appBar: AppBar(
           //  Create an app bar
-          title: Text('EasyList555'),
+          title: const Text('EasyList555'),
         ),
         body: ProductManager(),
       ),
