@@ -49,22 +49,29 @@ class _ProductManagerState extends State<ProductManager> {
     print(_products);
   }
 
+  void _deleteProduct(int index) {
+    setState(() {
+      _products.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print('[ProductManager State] build()');
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.all(10.0),
-          // To pass data about the list of Products, to Products class,
-          // ProductControl exists outside this class, we need a reference to it
-          // without executing it's return function '(_addProduct())'
-          child: ProductControl(_addProduct),
-        ),
-        Expanded(
-            child: Products(
-                _products)) //  Now we execute Products, which returns a column
-      ],
-    );
+    return Column(children: [
+      Container(
+        margin: EdgeInsets.all(10.0),
+        // To pass data about the list of Products, to Products class,
+        // ProductControl exists outside this class, we need a reference to it
+        // without executing it's return function '(_addProduct())'
+        child: ProductControl(_addProduct),
+      ),
+      Expanded(
+          child: Products(_products,
+              deleteProduct:
+                  _deleteProduct) //  Now we execute Products, which returns a column
+
+          )
+    ]);
   }
 }

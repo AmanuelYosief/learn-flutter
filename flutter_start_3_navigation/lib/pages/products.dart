@@ -26,7 +26,7 @@ class ProductPage extends StatelessWidget {
                   color: Theme.of(context).accentColor,
                   //  Raised button that navigates back by routes
                   //  (requires Context) to know it's whereabouts
-                  child: Text(title),
+                  child: Text("DELETE"),
                   onPressed: () => Navigator.pop(context, true)),
             ),
             Text('Details!'),

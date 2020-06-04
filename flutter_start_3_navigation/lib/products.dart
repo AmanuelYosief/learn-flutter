@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import './pages/products.dart';
@@ -5,8 +6,9 @@ import './pages/products.dart';
 class Products extends StatelessWidget {
 //  Dart is typed and  Generic
   final List<Map<String, String>> products;
+  final Function deleteProduct;
 
-  Products([this.products = const []]);
+  Products(this.products, {this.deleteProduct});
 
   Widget _buildProductItem(BuildContext context, int index) {
     return Card(
@@ -21,15 +23,18 @@ class Products extends StatelessWidget {
               // Material provides Navigation routes, which push taking
               // context as the first arguement. This keeps information about the page and where the page is located in the context
               //  The context is passed to the builder, the builder takes in the context, to take the information of what is need to be build
-              //  Navigation returns a future, this can be a string or a boolean time. 
+              //  Navigation returns a future, this can be a string or a boolean time.
               onPressed: () => Navigator.push<bool>(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (BuildContext context) => ProductPage(
                       products[index]['title'], products[index]['image']),
                 ),
-                //  Promise is returned
+                //  waiting Promise, where Future value is returned
               ).then((bool value) {
+                if (value) {
+                  deleteProduct(index);
+                }
                 print(value);
               }),
             ),
