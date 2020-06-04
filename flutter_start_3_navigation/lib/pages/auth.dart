@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './product.dart';
+import './products_admin.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({Key key}) : super(key: key);
@@ -15,11 +16,11 @@ class AuthPage extends StatelessWidget {
         child: RaisedButton(
           child: Text('Login'),
           onPressed: () {
-            // pushReplace, can be used for not navigation back, it has no back feature  
+            // pushReplace, can be used for not navigation back, it has no back feature
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => ProductPage(),
+                builder: (BuildContext context) => ProductAdminPage(),
               ),
             );
           },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './pages/auth.dart';
-
+import './pages/auth.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
