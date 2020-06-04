@@ -16,7 +16,7 @@ class ProductPage extends StatelessWidget {
         Navigator.pop(context, false);
         return Future.value(
             false); // If this is set to True, it deletes the other page aswell, hence false.
-            // Instead of null, now can decide and make use of back button returns. 
+        // Instead of null, now can decide and make use of back button returns.
       },
       child: Scaffold(
           appBar: AppBar(
