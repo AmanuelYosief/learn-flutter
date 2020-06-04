@@ -27,7 +27,7 @@ class ProductPage extends StatelessWidget {
                   //  Raised button that navigates back by routes
                   //  (requires Context) to know it's whereabouts
                   child: Text(title),
-                  onPressed: () => Navigator.pop(context)),
+                  onPressed: () => Navigator.pop(context, true)),
             ),
             Text('Details!'),
           ],
