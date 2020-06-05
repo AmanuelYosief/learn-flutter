@@ -43,7 +43,7 @@ class ProductAdminPage extends StatelessWidget {
         body: TabBarView(
           // Interacts with the tab bar controller which loads the pages
           children: <Widget>[
-            // The amount of page has to match the amount of tabs we have set up and the length
+            // The amount of page has to match the amount of tabs set up and the length
             // These tabs are imbended in this page, similar to adding a button
             ProductCreatePage(),
             ProductListPage()

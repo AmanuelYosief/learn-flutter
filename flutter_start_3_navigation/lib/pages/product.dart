@@ -23,6 +23,9 @@ class ProductPage extends StatelessWidget {
               FlatButton(
                 child: Text('Continue'),
                 onPressed: () {
+                  // First one closes the overlay, which is the modal
+                  Navigator.pop(context);
+                  // Closes the second layer
                   Navigator.pop(context, true);
                 },
               )
@@ -36,11 +39,11 @@ class ProductPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         print("Back Button Pressed");
-        // Now have to manually program for the software
-        //  and hardware back button since we are blocking default
+        // Now have to manually program for the [Software,Hardware] back button
+        // as this blocks the default
         Navigator.pop(context, false);
-        return Future.value(
-            false); // If this is set to True, it deletes the other page aswell, hence false.
+        return Future.value(false);
+        // If this is set to True, it deletes the other page aswell, two pops, hence false.
         // Instead of null, now can decide and make use of back button returns.
       },
       child: Scaffold(
@@ -59,12 +62,8 @@ class ProductPage extends StatelessWidget {
                   child: RaisedButton(
                       padding: EdgeInsets.all(10.0),
                       color: Theme.of(context).accentColor,
-                      //  Raised button that navigates back by routes
-                      //  (requires Context) to know it's whereabouts
                       child: Text("DELETE"),
-                      onPressed:
-                          () => _showWarningDialog(context)) // Promise can be added to listen for return,
-                  ),
+                      onPressed: () => _showWarningDialog(context))),
               Text('Details!'),
             ],
           )),

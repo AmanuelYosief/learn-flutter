@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Global data, so that it doesn't get destroy and accessible
   List<Map<String, String>> _products = [];
 
   void _addProduct(Map<String, String> product) {
@@ -32,31 +33,28 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    //  Build method returns what needs to be drawn on the screen
-    //  Widget (Widget, BuildContext) is named, so that Typed lang Dart doesn't have to infer
     return MaterialApp(
       theme: ThemeData(
           brightness: Brightness.dark,
           primarySwatch: Colors.deepOrange,
           accentColor: Colors.deepPurple),
-      //home: AuthPage(),
-
+      //  home: AuthPage(),
       // Global Page Registery using Routes
       routes: {
         // Home route
-        // Since we have already registered the values for constructor, we don't require setting up anywhere else
-        // They get replaced by pushReplaceNamed(context, '/');
         '/': (BuildContext context) =>
             ProductsPage(_products, _addProduct, _deleteProduct),
+        // This setups the values for the constructur, this means it's not needed to be setup elsewhere 
+        // Elsewhere gets replaced by pushReplaceNamed(context, '/');
         '/admin': (BuildContext context) => ProductAdminPage(),
       },
       // Passing data through noutes
       //'/product' : (BuildContext context) => ProductPage(
       //            products[index]['title'], products[index]['image']),
-      // Used for routes not in our global registry and passing data
-      // This generates and returns a route
 
-      // handles named routes not registed in route registry, We can now add our own logical
+
+      // handles named routes not registed in route registry and passing data,
+      //  Additionally, it provides us with ability to add logic
       onGenerateRoute: (RouteSettings setting) {
         final List<String> pathElements =
             setting.name.split('/'); //'/product/1'
@@ -77,20 +75,16 @@ class _MyAppState extends State<MyApp> {
                 _products[index]['title'], _products[index]['image']),
           );
         }
-        return null;
+        return null; //Returns a route
       },
-      onUnknownRoute: (RouteSettings settings){
+      onUnknownRoute: (RouteSettings settings) {
         // If a named route is not registered in Global Registry or Generate Route
-        // this returns a default fail route
+        // this returns a default fail route 404
         // This goes back to the starting page
-        return MaterialPageRoute(builder: (BuildContext context) =>
-            ProductsPage(_products, _addProduct, _deleteProduct));
-
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                ProductsPage(_products, _addProduct, _deleteProduct));
       },
-
-
-
-
     );
   }
 }

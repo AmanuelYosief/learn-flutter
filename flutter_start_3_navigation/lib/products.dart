@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class Products extends StatelessWidget {
 //  Dart is typed and  Generic
   final List<Map<String, String>> products;
@@ -22,7 +21,7 @@ class Products extends StatelessWidget {
               // Material provides Navigation routes, which push taking
               // context as the first arguement. This keeps information about the page and where the page is located in the context
               //  The context is passed to the builder, the builder takes in the context, to take the information of what is need to be build
-              //  Navigation returns a future, this can be a string or a boolean time.
+              //  Navigation returns a future, this can be a string or a boolean
               onPressed: () => Navigator.pushNamed<bool>(
                       context, '/product/' + index.toString())
                   .then((bool value) {
