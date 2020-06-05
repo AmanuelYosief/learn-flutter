@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import './pages/products.dart';
+import './pages/product.dart';
 
 class Products extends StatelessWidget {
 //  Dart is typed and  Generic

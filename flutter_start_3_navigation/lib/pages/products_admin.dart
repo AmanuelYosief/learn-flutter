@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './product.dart';
+import './products.dart';
 import './product_create.dart';
 import './product_list.dart';
 
@@ -23,7 +23,7 @@ class ProductAdminPage extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ProductPage(),
+                        builder: (BuildContext context) => ProductsPage(),
                       ));
                 },
               )

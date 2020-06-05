@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './product.dart';
 import './products_admin.dart';
 
 class AuthPage extends StatelessWidget {
