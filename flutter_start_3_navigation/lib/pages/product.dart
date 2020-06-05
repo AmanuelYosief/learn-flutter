@@ -6,6 +6,31 @@ class ProductPage extends StatelessWidget {
 
   ProductPage(this.title, this.imageUrl);
 
+  _showWarningDialog(BuildContext context) {
+    showDialog(
+        // Requires the context
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('This action can be undone!'),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text('Discard'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              FlatButton(
+                child: Text('Continue'),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -31,14 +56,15 @@ class ProductPage extends StatelessWidget {
                 child: Text('Details!'),
               ),
               Container(
-                child: RaisedButton(
-                    padding: EdgeInsets.all(10.0),
-                    color: Theme.of(context).accentColor,
-                    //  Raised button that navigates back by routes
-                    //  (requires Context) to know it's whereabouts
-                    child: Text("DELETE"),
-                    onPressed: () => Navigator.pop(context, true)),
-              ),
+                  child: RaisedButton(
+                      padding: EdgeInsets.all(10.0),
+                      color: Theme.of(context).accentColor,
+                      //  Raised button that navigates back by routes
+                      //  (requires Context) to know it's whereabouts
+                      child: Text("DELETE"),
+                      onPressed:
+                          () => _showWarningDialog(context)) // Promise can be added to listen for return,
+                  ),
               Text('Details!'),
             ],
           )),
