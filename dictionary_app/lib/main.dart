@@ -6,6 +6,12 @@ import 'package:http/http.dart';
 
 void main() => runApp(MyApp());
 
+//  There is two kinds of streams.
+// Single-subscription streams or Broadcast stream
+//  Single type = allows only a single listerner during the whole lifetime of stream
+//  Broadcast stream allows any numbers of listerns and fires it's events when they are
+//  ready, whether there are listerners or not.
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -139,16 +145,15 @@ class _MyHomePageState extends State<MyHomePage> {
           stream: _stream,
           builder: (BuildContext ctx, AsyncSnapshot snapshot) {
             //<int> e.g.
-            if (snapshot.data == null) {
+            if (snapshot.data == null || !snapshot.hasData) {
               // If the stream returns a null value
               return Center(
                 child: Text("Enter a search word"),
               );
-            }
-            if (snapshot.hasError) {
+            } else if (snapshot.hasError) {
+              // Further error catching with snapshot.connectionState);
               return Center(child: Text("Failed to fetch data"));
-            }
-            if (snapshot.data == "waiting") {
+            } else if (snapshot.data == "waiting") {
               // Steam is not null and waiting for a asynctionous response
               return Center(
                 child: CircularProgressIndicator(),
