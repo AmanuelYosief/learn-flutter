@@ -32,25 +32,53 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _controller = TextEditingController();
 
   StreamController _streamController;
+  // StreamController allows for sending data, error and done events on it's stream
+  // It is used to create a simple stream that others can listen on and to push events to that stream
+
   Stream _stream;
+  // The stream that the controller is controlling.
+  // The stream will be set to _StreamController.stream on initialization
 
   Timer _debounce;
 
   _search() async {
     if (_controller.text == null || _controller.text.length == 0) {
       _streamController.add(null);
+      // Since this is a <T> futures, it will return a null (or any values i assign)
       return;
     }
 
+    // returns a <T> futures text, this can be used to control loading
     _streamController.add("waiting");
-    Response response = await get(_url + _controller.text.trim(),
-        headers: {"Authorization": "Token " + _token});
-    _streamController.add(json.decode(response.body));
+
+    // Uses the URL and token, and headers to get the data and return it as
+    // a decoded json file
+    try {
+      Response response = await get(_url + _controller.text.trim(),
+          headers: {"Authorization": "Token " + _token});
+      _streamController.add(json.decode(response.body));
+      print("IT IS HERE");
+      print(response);
+    } catch (e) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const <Widget>[
+          Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 24.0,
+            semanticLabel: 'Text to announce in accessibility modes',
+          ),
+          Text("Try Again"),
+        ],
+      );
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    // Setting up the StreamController. This is one only supports on single subscriber
     _streamController = StreamController();
     _stream = _streamController.stream;
   }
@@ -103,21 +131,33 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         margin: const EdgeInsets.all(8.0),
         child: StreamBuilder(
+          // Creates a new StreamBuilder that builds itself based on the lastest
+          // snapshot of interaction with the specified stream and whose build
+          // strategy is given by builder[]
+          // The initialData is used to create the initial snapshot.
+
           stream: _stream,
           builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            //<int> e.g.
             if (snapshot.data == null) {
+              // If the stream returns a null value
               return Center(
                 child: Text("Enter a search word"),
               );
             }
-
+            if (snapshot.hasError) {
+              return Center(child: Text("Failed to fetch data"));
+            }
             if (snapshot.data == "waiting") {
+              // Steam is not null and waiting for a asynctionous response
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
 
             return ListView.builder(
+              // Uses a listview to show the data, which is scrollable.
+              // it is important to specify it's length first
               itemCount: snapshot.data["definitions"].length,
               itemBuilder: (BuildContext context, int index) {
                 return ListBody(
@@ -130,6 +170,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 null
                             ? null
                             : CircleAvatar(
+                                // NetworkImage is an object that fetches the image at the
+                                // given URL.
                                 backgroundImage: NetworkImage(snapshot
                                     .data["definitions"][index]["image_url"]),
                               ),
