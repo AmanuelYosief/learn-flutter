@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+// // https://www.youtube.com/watch?v=H8c2rpOHZVc&list=WL&index=612
+// https://www.youtube.com/watch?v=ZjFzDZ4KV-s&t=123s
 void main() => runApp(MyApp());
 
 //  There is two kinds of streams.
@@ -40,12 +42,19 @@ class _MyHomePageState extends State<MyHomePage> {
   StreamController _streamController;
   // StreamController allows for sending data, error and done events on it's stream
   // It is used to create a simple stream that others can listen on and to push events to that stream
-
+  // Need to manage memory  using this method
   Stream _stream;
   // The stream that the controller is controlling.
   // The stream will be set to _StreamController.stream on initialization
 
   Timer _debounce;
+
+  @override
+  void dispose() {
+    super.dispose();
+    // Managing memory and closing connections
+    _streamController.close();
+  }
 
   _search() async {
     if (_controller.text == null || _controller.text.length == 0) {
@@ -142,7 +151,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // strategy is given by builder[]
           // The initialData is used to create the initial snapshot.
 
-          stream: _stream,
+          stream:
+              _stream, // Filtering is possible using . where(bool) or map to concanate it with other data
           builder: (BuildContext ctx, AsyncSnapshot snapshot) {
             //<int> e.g.
             if (snapshot.data == null || !snapshot.hasData) {
@@ -176,6 +186,8 @@ class _MyHomePageState extends State<MyHomePage> {
             return ListView.builder(
               // Uses a listview to show the data, which is scrollable.
               // it is important to specify it's length first
+              // It is possible to get data with Text("${snapshot.data}"
+
               itemCount: snapshot.data["definitions"].length,
               itemBuilder: (BuildContext context, int index) {
                 return ListBody(
