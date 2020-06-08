@@ -160,6 +160,19 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             }
 
+/*
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Text('Not connected to the Stream or null');
+              case ConnectionState.waiting:
+                return Text('awaiting interaction');
+              case ConnectionState.active:
+                return Text('Stream has started but not finished');
+              case ConnectionState.done:
+                return Text('Stream has finished');
+            }
+
+*/
             return ListView.builder(
               // Uses a listview to show the data, which is scrollable.
               // it is important to specify it's length first
