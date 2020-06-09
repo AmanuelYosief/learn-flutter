@@ -1,6 +1,5 @@
-import 'dart:math';
-import 'dart:typed_data';
-
+import 'package:bloc_example_state_management/counter_bloc.dart';
+import 'package:bloc_example_state_management/counter_event.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,44 +28,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+  // Import the bloc, this is normally at the top of a widget tree and is passed
+  // down through inherited widget
+  final _bloc = CounterBloc();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: StreamBuilder(
+          stream: _bloc.counter,
+          initialData: 0,
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            return Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'You have pushed the button this many times:',
+                  ),
+                  Text(
+                    '${snapshot.data}',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ],
               ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton:
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+            );
+          }),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
           FloatingActionButton(
-            onPressed: _decrementCounter,
+            // Event handler for bloc controller
+            // This adds data to the bloc
+            onPressed: () => _bloc.counterEventSink.add(IncrementEvent()),
             tooltip: 'Decrement',
             child: Icon(Icons.remove),
           ),
@@ -74,10 +71,19 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 10,
           ),
           FloatingActionButton(
-            onPressed: _incrementCounter,
+            onPressed: () => _bloc.counterEventSink.add(DecrementEvent()),
             tooltip: 'Increment',
             child: Icon(Icons.add),
           )
-        ]));
+        ],
+      ),
+    );
+  }
+
+//  Manage memory leak
+  @override
+  void dispose() {
+    super.dispose();
+    _bloc.dispose();
   }
 }
