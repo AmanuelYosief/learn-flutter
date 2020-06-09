@@ -1,16 +1,54 @@
 # bloc_example_state_management
 
-A new Flutter project.
+# Background
 
-## Getting Started
+# Abstract base class on which events are extended  _event.dart
+  abstract class CounterEvent {}
+  
+  class IncrementEvent extends CounterEvent {} 
+  
+  class DecrementEvent extends CounterEvent {}
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# _bloc.dart
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  Create the Controller to privately (_underscore)a input into the sink
+  final _counterStateController = StreamController<int>();
+   StreamSink<int> get _inCounter => _counterStateController.sink; // Input
+  
+  Create the Stream to publically otuput (to enable listerning)  through the stream
+  Stream<int> get counter => _counterStateController.stream; // Output
+
+  
+  Create the EventController to manage public events that are sent to the bloc and render the UI. This is feed into the sink
+  final _counterEventController = StreamController<CounterEvent>();
+  
+  
+  Public events are sent to the sink of the EventController
+  Sink<CounterEvent> get counterEventSink => _counterEventController.sink;
+  
+  Create the constructor to Listen to the event streams and then map/filter/manage it
+  _counterEventController.stream.listen(_mapEventToState);
+  
+  // Accepts an event and behaves accordingly
+  void _mapEventToState(CounterEvent event) {
+    if (event is IncrementEvent)
+      _counter++;
+    else
+      _counter--;
+
+    _inCounter.add(_counter);
+  }
+
+  // To avoid memory leak, dispose();
+  void dispose() {
+    _counterStateController.close();
+    _counterEventController.close();
+  }
+}
+
+
+
+
+
