@@ -1,4 +1,3 @@
-
 # bloc_example_state_management
 
 
@@ -49,6 +48,8 @@
     _inCounter.add(_counter);
   }
    ```
+   
+   Managing memory and closing connection
    To avoid memory leak, dispose();
   
   ```dart
@@ -59,3 +60,72 @@
 }
  ```
 
+## Inputting data into the stream
+
+There is two kinds of streams.
+Single-subscription streams or Broadcast stream
+
+ - Single type = allows only a single listerner during the whole
+   lifetime of stream
+ - Broadcast stream allows any numbers of listerns and fires it's events
+   when they are ready, whether there are listerners or not.
+
+  ```dart
+
+// Adding data into the stream
+addData() async {
+for (int i = 0; i <= 10; i++) {
+// Setting up a second delay
+await Future.delayed(Duration(seconds: 1));
+// Then adds data to the source of the stream.
+// The Sink is the source.
+_streamController.sink.add(i);
+}
+}
+  ```
+
+  
+## Another way to create a stream
+  ```dart
+// Provide a type e.g.
+Stream<int> numberStream() async* {
+for (int i = 0; i <= 10; i++) {
+// Setting up a second delay
+await Future.delayed(Duration(seconds: 1));
+// Then adds data to the source of the stream.
+// The Sink is the source.
+yield i;
+// No need to worry about memory leak, it closes on finish
+}
+}
+ ```
+
+## StreamBuilder main.dart
+
+
+#### Import the bloc, this is normally at the top of a widget tree and is passed down through inherited widget
+  ```dart
+final _bloc =  CounterBloc();
+body: Center(
+child: StreamBuilder(
+stream: numberStream(), //previously _streamController.Stream,
+ ```
+
+### Enable filtering
+#### numberStream().where((number) => number%2 == 0), for even numbers
+#### numberStream().map((number) => "number $number").
+
+  ```dart
+initialData: null,
+builder: (BuildContext context, AsyncSnapshot snapshot) {
+if (snapshot.hasError) {
+return Text("There is some error");
+} else if (snapshot == null) {
+return CircularProgressIndicator();
+}
+
+return Container(
+child: Text("${snapshot.data}",
+style: Theme.of(context).textTheme.bodyText1),
+);
+ ```
