@@ -4,16 +4,22 @@ import 'package:time_tracker_flutter_course/app/sign_in/social_sign_in_button.da
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInPage extends StatelessWidget {
+  
+  SignInPage({@required this.onSignIn});
+
+  final Function(FirebaseUser) onSignIn;
+
   Future<void> _signInAnonymously() async {
-    // signlenton
-    // go to definition
+    // signlenton amd  go to definition
     try {
       final authResult = await FirebaseAuth.instance.signInAnonymously();
-      return print('${authResult.user.uid}');
+      onSignIn(authResult.user);
+      //return print('${authResult.user.uid}');
     } catch (e) {
       print(e.toString());
     }
-     ///  * `ERROR_OPERATION_NOT_ALLOWED` - Indicates that Anonymous accounts are not enabled.
+
+    ///  * `ERROR_OPERATION_NOT_ALLOWED` - Indicates that Anonymous accounts are not enabled.
   }
 
   @override
