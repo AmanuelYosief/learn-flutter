@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker_flutter_course/app/sign_in/sign_in_button.dart';
 import 'package:time_tracker_flutter_course/app/sign_in/social_sign_in_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInPage extends StatelessWidget {
+  Future<void> _signInAnonymously() async {
+    // signlenton
+    // go to definition
+    try {
+      final authResult = await FirebaseAuth.instance.signInAnonymously();
+      return print('${authResult.user.uid}');
+    } catch (e) {
+      print(e.toString());
+    }
+     ///  * `ERROR_OPERATION_NOT_ALLOWED` - Indicates that Anonymous accounts are not enabled.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +78,8 @@ class SignInPage extends StatelessWidget {
             text: 'Go anonymous',
             textColor: Colors.black,
             color: Colors.lime[300],
-            onPressed: () {},
+            onPressed:
+                _signInAnonymously, // {} => _signInAnonymously, since this is a call back that takes no arguement, and so is signInAnonymously,we can just pass the name
           ),
           SizedBox(height: 8.0),
         ],
