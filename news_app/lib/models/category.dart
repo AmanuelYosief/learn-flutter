@@ -1,10 +1,23 @@
 class CategoryModel {
+  // This powerups the view model for the Category. 
+  // Each category has a name and a background image
+
   String imageAssetUrl;
   String categoryname;
 
+  //  Initialize the categorie
   CategoryModel({this.imageAssetUrl, this.categoryname});
 }
 
+  // A class to contain a list of all our categories of type category
+class Categories {
+  List<CategoryModel> categories;
+
+  Categories({this.categories});
+}
+
+
+  // Defining the list of category (models) that will be put into Categories. 
 Categories categorieslist = Categories(categories: [
   CategoryModel(
       categoryname: 'Business',
@@ -32,8 +45,4 @@ Categories categorieslist = Categories(categories: [
           "https://images.unsplash.com/photo-1495563923587-bdc4282494d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80"),
 ]);
 
-class Categories {
-  List<CategoryModel> categories;
 
-  Categories({this.categories});
-}

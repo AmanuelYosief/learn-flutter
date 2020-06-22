@@ -1,4 +1,6 @@
 class Article {
+  // Every article is going to have
+
   String title;
   String author;
   String description;
@@ -7,6 +9,7 @@ class Article {
   String content;
   String articleUrl;
 
+  //  Initialize the class
   Article(
       {this.title,
       this.description,
