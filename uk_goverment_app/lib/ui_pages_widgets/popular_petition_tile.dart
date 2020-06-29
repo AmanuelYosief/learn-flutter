@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uk_goverment_app/styles/MyColor.dart';
 
 class PopularTile extends StatelessWidget {
   final String title, subtitle;
@@ -24,7 +25,7 @@ class PopularTile extends StatelessWidget {
               style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 15))),
           trailing: Icon(
             Icons.arrow_forward_ios,
-            color: Colors.black,
+            color: MyColor().iconLight,
             size: 15,
           )),
     );

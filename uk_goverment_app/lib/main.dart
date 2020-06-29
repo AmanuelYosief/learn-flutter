@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:uk_goverment_app/ui_pages/home_page.dart';
-import 'package:uk_goverment_app/ui_pages/splash_page.dart';
+import 'package:uk_goverment_app/ui_pages/test_api.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: TestApi(),
     );
   }
 }
